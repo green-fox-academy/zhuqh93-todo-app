@@ -11,25 +11,37 @@ namespace TODO_App
         public System.String Name { get; set; }
         public System.String FilePath { get; set; }
         private List<string> taskList = new List<string>();
+        public int NumberOfTask { get; set; }
         
         public void ListTask()
         {
-            string tempStore = "";
-            StreamReader reader = new StreamReader(FilePath);
-
-            while (tempStore != null)
+            if (NumberOfTask > 0)
             {
-                tempStore = reader.ReadLine();
-                taskList.Add(tempStore);
+                using (StreamReader reader = new StreamReader(FilePath))
+                {
+                    string tempStore = "";
+
+                    while (tempStore != null)
+                    {
+                        tempStore = reader.ReadLine();
+                        taskList.Add(tempStore);
+                    }
+
+                    int index = 1;
+
+                    foreach (var task in taskList)
+                    {
+                        Console.WriteLine("{0} - {1}", index, task);
+                        index++;
+                    }
+                }
             }
-
-            int index = 1;
-
-            foreach (var task in taskList)
+            else
             {
-                index++;
-                Console.WriteLine("{0} - {1}", index, task);
+                Console.WriteLine("No todos for today! :)");
             }
         }
+
+
     }
 }
